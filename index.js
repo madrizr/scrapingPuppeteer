@@ -1,9 +1,11 @@
 "use strict"
+
 const express = require("express");
 require('dotenv').config()
 const cors = require('cors');
 const { extraerEnlacesIpadAmazon } = require('./services/scraper.service');
-const start = require('./rutes/start')
+const start = require('./rutes/start');
+const { testingScraper } = require("./services/tools.service");
 
 // Crear el servidor express
 const app = express();
@@ -18,11 +20,13 @@ app.use( express.json() );
 app.use( '/api', start );
 
 //Ejecucion
-setInterval(extraerEnlacesIpadAmazon, 180000)
+let cont = 2;
+  setInterval(extraerEnlacesIpadAmazon, 180000, cont);
+  
 // extraerEnlacesIpadAmazon()
 
 app.listen( process.env.PORT, () => {
-  console.log('servidor corriendo en puerto ' + process.env.PORT);
+  console.log('servidor corriendo en puerto' + process.env.PORT);
 })
 
 /*(async () => {

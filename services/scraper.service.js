@@ -1,10 +1,12 @@
 const puppeteer = require('puppeteer');
-const writeJson = require('./tools.service')
+const {writeJson, restartServer} = require('./tools.service');
 
-const extraerEnlacesIpadAmazon = () => {
+const extraerEnlacesIpadAmazon = (count) => {
     
     (async () => {
-      const browser = await puppeteer.launch({ headless: true });
+      try{
+
+      const browser = await puppeteer.launch({ headless: false });
       const page = await browser.newPage();
     
       await page.goto('https://www.google.com');
@@ -55,7 +57,7 @@ const extraerEnlacesIpadAmazon = () => {
     })
         let titles = [];
         
-      for(let enlace = 0; enlace < 5; enlace++){
+      for(let enlace = 0; enlace < count; enlace++){
     
         await page.goto(enlaces[enlace], { waitUntil: 'networkidle2', timeout: 0});
         // await page.waitForTimeout(3000)
@@ -74,6 +76,11 @@ const extraerEnlacesIpadAmazon = () => {
       console.log(titles)
       writeJson(titles, "../json/titles.json");
       await browser.close();
+
+    }catch(err){
+      console.error
+      // restartServer();
+    }
     })();
 }
 
