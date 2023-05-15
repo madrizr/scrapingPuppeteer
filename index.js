@@ -4,7 +4,7 @@ require('dotenv').config()
 const cors = require('cors');
 const { extraerEnlacesIpadAmazon } = require('./services/scraper.service');
 const start = require('./rutes/start');
-const { testingScraper } = require("./test/tools.test");
+const { testingScraper, testingScraper2 } = require("./test/tools.test");
 
 // Crear el servidor express
 const app = express();
@@ -19,7 +19,8 @@ app.use( express.json() );
 app.use( '/api', start );
 
 //Ejecucion
-testingScraper(extraerEnlacesIpadAmazon, 300000);
+// testingScraper(extraerEnlacesIpadAmazon, 300000);
+setInterval(extraerEnlacesIpadAmazon,300000, 10)
 
 app.listen( process.env.PORT || 4000, () => {
   console.log('servidor corriendo en puerto' + process.env.PORT);
