@@ -6,7 +6,7 @@ const extraerEnlacesIpadAmazon = (count) => {
     (async () => {
       try{
 
-      const browser = await puppeteer.launch({ headless: false });
+      const browser = await puppeteer.launch({ headless: true }); // Activar y ocultar o ver chromium trabajando
       const page = await browser.newPage();
     
       await page.goto('https://www.google.com');
