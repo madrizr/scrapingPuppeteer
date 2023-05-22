@@ -20,7 +20,7 @@ app.use( '/api', start );
 
 //Ejecucion
 // testingScraper(extraerEnlacesIpadAmazon, 300000);
-setInterval(extraerEnlacesIpadAmazon,300000, 10)
+
 
 app.listen( process.env.PORT || 4000, () => {
   console.log('servidor corriendo en puerto' + process.env.PORT);

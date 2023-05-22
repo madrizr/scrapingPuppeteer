@@ -1,9 +1,8 @@
 const puppeteer = require('puppeteer');
 const {writeJson, restartServer} = require('./tools.service');
 
-const extraerEnlacesIpadAmazon = (count) => {
+const extraerEnlacesIpadAmazon = async (count) => {
     
-    (async () => {
       try{
 
       const browser = await puppeteer.launch({ headless: true }); // Activar y ocultar o ver chromium trabajando
@@ -64,7 +63,7 @@ const extraerEnlacesIpadAmazon = (count) => {
         await page.waitForSelector('#productTitle');
         await page.waitForSelector('.a-price span');
         // await page.waitForNavigation();
-
+        await page.setDefaultNavigationTimeout(0);
         const tempEv = await page.evaluate(()=>{ // Para inspeccionar la pagina usamos evaluate(), y dentro manipulamos los eleentos html con javascript nativo
             const temp = {};
             temp.title = document.querySelector('#productTitle').innerText;
@@ -74,14 +73,15 @@ const extraerEnlacesIpadAmazon = (count) => {
         titles.push(tempEv);
       } 
       console.log(titles)
-      writeJson(titles, "../json/titles.json");
+     // writeJson(titles, "../json/titles.json");
       await browser.close();
 
+      return titles
+
     }catch(err){
-      console.error
+      console.log(err)
       // restartServer();
     }
-    })();
 }
 
 module.exports = {
